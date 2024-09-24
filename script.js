@@ -1,12 +1,20 @@
 let isWorking = true; // true pour travail, false pour pause
 let timer; // Variable pour stocker le timer
-let timeLeft = 25 * 60; // 25 minutes en secondes
+let timeLeft = 60; // 25 minutes en secondes
+const totalTime = timeLeft; // Pourcentage total du temps
 
 function updateTimerDisplay() {
     const minutes = Math.floor(timeLeft / 60);
     const seconds = timeLeft % 60;
     document.getElementById("timer").innerText = 
         `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+
+    // Calculer la progression du cercle
+    const progressCircle = document.getElementById("progress-circle");
+    const circumference = 2 * Math.PI * 150; // Circonférence du cercle (150 est le rayon)
+    const offset = circumference - (timeLeft / totalTime) * circumference; // Calculer l'offset
+    progressCircle.style.strokeDasharray = `${circumference} ${circumference}`;
+    progressCircle.style.strokeDashoffset = offset; // Appliquer l'offset
 }
 
 function startTimer() {

@@ -6,20 +6,23 @@
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
     <title>Pomodoro</title>
 </head>
 <body>
     <main>
-        <h1>TIMER POMODORO</h1>
+        <h1 font-family="Montserrat">TIMER POMODORO</h1>
         <div class="travailpause">
-            <p id="">Travail</p>
-            <p id="">Pause</p>
+            <p>Travail</p>
+            <p>Pause</p>
         </div>
         <div class="circle">
-            <div id="timer">00:00</div> 
+            <svg width="400" height="400">
+                <circle cx="200" cy="200" r="150" class="background-circle" />
+                <circle id="progress-circle" cx="200" cy="200" r="150" class="progress-circle" />
+                <div id="timer" x="200" y="220" text-anchor="middle" fill="white" font-size="3rem" font-family="Montserrat">25:00</div> <!-- Timer inside SVG -->
+            </svg>
         </div>
         <div class="bouton">
             <button id="startStopBtn" class="playpause"> <i class="fas fa-play"></i></button>

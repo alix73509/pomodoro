@@ -3,6 +3,7 @@ h1 {
     color: white;
     font-weight: bold;
     font-size: 50px;
+    margin-bottom: 20px; /* Espace entre le titre et le reste du contenu */
 }
 
 body {
@@ -12,12 +13,16 @@ body {
     align-items: center;  /* Centrer verticalement */
     height: 100vh;
     background-color: red;
+    flex-direction: column; /* Permet d'empiler les éléments verticalement */
 }
 
 #timer {
     font-size: 3rem;
-    margin-bottom: 20px;
-    color: white;
+    margin: 0; /* Supprime la marge par défaut */
+    color: white; /* Couleur du texte en blanc */
+    position: absolute; /* Positionnement absolu pour superposer sur le SVG */
+    z-index: 2; /* Assure que le timer est au-dessus du SVG */
+    text-anchor: middle; /* Centre le texte */
 }
 
 .playpause {
@@ -33,22 +38,21 @@ body {
     justify-content: center; 
     align-items: center;   
     font-size: 3rem;  
-    margin: 10px auto;  /* Centre horizontalement */
-    margin-top: 15%;
+    margin-top: 20px; /* Espace au-dessus du bouton */
 }
 
 .circle {
     width: 400px;          
     height: 400px;         
-    background-color: red; 
+    background-color: transparent; /* Pas de fond pour que le SVG soit visible */
     border-radius: 50%;    
     box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.8); 
     display: flex;         
     justify-content: center; 
     align-items: center;   
     flex-direction: column; 
-    margin: 0 auto; /* Centre horizontalement */
-    margin-top: 15%;
+    position: relative; /* Permet de positionner le SVG à l'intérieur */
+    margin: 0 auto; /* Centre le cercle horizontalement */
 }
 
 .travailpause {
@@ -63,11 +67,31 @@ body {
     flex-direction: row;  
     padding: 10px 20px;      /* Ajout d'espace intérieur */
     margin: 10px auto;       /* Centre horizontalement */
-    margin-top: 15%;
 }
 
 .travailpause p {
     margin: 0;            /* Enlève la marge par défaut */
     color: white;         /* Couleur du texte pour qu'il soit visible */
     font-size: 1.5rem;    /* Taille de la police */
+}
+
+.background-circle {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.2);
+    stroke-width: 20; /* Épaisseur du cercle de fond */
+}
+
+.progress-circle {
+    fill: none;
+    stroke: rgb(217, 255, 0); /* Couleur du cercle de progression */
+    stroke-width: 20; /* Épaisseur du cercle de progression */
+    stroke-linecap: round; /* Coins arrondis */
+    transition: stroke-dashoffset 0.5s; /* Transition fluide pour le changement de la progression */
+}
+
+.bouton {
+    display: flex; /* Utilise flexbox pour centrer le bouton */
+    justify-content: center; /* Centre horizontalement */
+    width: 100%; /* Prend toute la largeur disponible */
+    margin-top: 20px; /* Espace au-dessus du bouton */
 }
