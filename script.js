@@ -1,36 +1,44 @@
-let timerElement = document.getElementById('timer');
-        let startStopBtn = document.getElementById('startStopBtn');
-        let resetBtn = document.getElementById('resetBtn');
-        let interval;
-        let isRunning = false;
-        let time = 0;
+let isWorking = true; // true pour travail, false pour pause
+let timer; // Variable pour stocker le timer
+let timeLeft = 25 * 60; // 25 minutes en secondes
 
-        // Fonction pour démarrer le chronomètre
-        function startTimer() {
-            interval = setInterval(() => {
-                time++;
-                let hours = Math.floor(time / 3600);
-                let minutes = Math.floor((time % 3600) / 60);
-                let seconds = time % 60;
+function updateTimerDisplay() {
+    const minutes = Math.floor(timeLeft / 60);
+    const seconds = timeLeft % 60;
+    document.getElementById("timer").innerText = 
+        `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+}
 
-                timerElement.textContent = 
-                    `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-            }, 1000);
+function startTimer() {
+    timer = setInterval(() => {
+        timeLeft--;
+        updateTimerDisplay();
+
+        if (timeLeft < 0) {
+            clearInterval(timer);
+            isWorking = !isWorking; // Alterne entre travail et pause
+            timeLeft = isWorking ? 25 * 60 : 5 * 60; // 25 minutes ou 5 minutes
+            updateTimerDisplay();
+            alert(isWorking ? "Retour au travail !" : "Temps de pause !");
+            startTimer(); // Démarre le nouveau timer
         }
+    }, 1000);
+}
 
-        // Fonction pour arrêter le chronomètre
-        function stopTimer() {
-            clearInterval(interval);
-        }
+function toggleTimer() {
+    const playPauseButton = document.querySelector(".playpause");
+    
+    if (timer) {
+        clearInterval(timer);
+        timer = null; // Arrête le timer
+        playPauseButton.innerHTML = '<i class="fas fa-play"></i>'; // Change l'icône en "Play"
+    } else {
+        startTimer(); // Démarre le timer
+        playPauseButton.innerHTML = '<i class="fas fa-pause"></i>'; // Change l'icône en "Pause"
+    }
+}
 
-        // Gestion du bouton Démarrer/Arrêter
-        startStopBtn.addEventListener('click', function() {
-            if (isRunning) {
-                stopTimer();
-                startStopBtn.innerHTML = '<i class="fas fa-play"></i>'; // Change en Démarrer
-            } else {
-                startTimer();
-                startStopBtn.innerHTML = '<i class="fas fa-pause"></i>'; // Change en Arrêter
-            }
-            isRunning = !isRunning; // Inverse l'état du chronomètre
-        });
+document.querySelector(".playpause").addEventListener("click", toggleTimer);
+
+// Initialise l'affichage
+updateTimerDisplay();
