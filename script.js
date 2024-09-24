@@ -1,6 +1,6 @@
 let isWorking = true; // true pour travail, false pour pause
 let timer; // Variable pour stocker le timer
-let timeLeft = 60; // 25 minutes en secondes
+let timeLeft = 1 * 60; // Réinitialiser à 25 minutes en secondes
 const totalTime = timeLeft; // Pourcentage total du temps
 
 function updateTimerDisplay() {
@@ -18,6 +18,7 @@ function updateTimerDisplay() {
 }
 
 function startTimer() {
+    document.getElementById("travail").style.color = "yellowgreen";
     timer = setInterval(() => {
         timeLeft--;
         updateTimerDisplay();
@@ -39,10 +40,13 @@ function toggleTimer() {
     if (timer) {
         clearInterval(timer);
         timer = null; // Arrête le timer
+        timeLeft = totalTime; 
+        document.getElementById("travail").style.color = "white";
+        updateTimerDisplay(); // Met à jour l'affichage après réinitialisation
         playPauseButton.innerHTML = '<i class="fas fa-play"></i>'; // Change l'icône en "Play"
     } else {
         startTimer(); // Démarre le timer
-        playPauseButton.innerHTML = '<i class="fas fa-pause"></i>'; // Change l'icône en "Pause"
+        playPauseButton.innerHTML = '<i class="fa-solid fa-clock-rotate-left"></i>'; // Change l'icône en "Pause"
     }
 }
 
