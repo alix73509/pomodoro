@@ -1,5 +1,5 @@
 let isWorking = true; // true pour travail, false pour pause
-let timer;
+let timer = null; // Variable pour le timer
 let workTime = 5 * 2;  // Temps de travail (pour test : 2 minutes)
 let breakTime = 5 * 2; // Temps de pause (pour test : 2 minutes)
 let timeLeft = workTime; // Temps initial pour le travail
@@ -63,18 +63,39 @@ function resetTimer() {
     clearInterval(timer); // Arrêter le timer actuel (si en cours)
     timer = null; // Réinitialiser la variable timer
 
-    // Réinitialiser le temps en fonction du mode actuel
-    timeLeft = isWorking ? workTime : breakTime;
+    // Remettre le temps à celui du travail
+    isWorking = true; // Assurer que l'état est travail
+    timeLeft = workTime; // Réinitialiser à 2 minutes (ou ce que vous avez défini)
+    
+    // Mettre à jour l'affichage pour le mode travail
+    document.getElementById("travail").style.color = "yellow"; // Couleur du texte pour le mode travail
+    document.getElementById("Pause").style.color = "white"; // Couleur du texte pour le mode pause
+    changeColor("red"); // Changer la couleur de fond pour le mode travail
     updateTimerDisplay(); // Met à jour l'affichage immédiatement
-    startTimer(); // Redémarrer le timer depuis le début
 
-    // Mettre à jour l'icône du bouton (peut être ajusté)
+    // Mettre à jour l'icône du bouton
     const playPauseButton = document.querySelector(".playpause");
-    playPauseButton.innerHTML = '<i class="fa-solid fa-clock-rotate-left"></i>'; // Icône reset/restart
+    playPauseButton.innerHTML = '<i class="fas fa-play"></i>'; // Icône pour démarrer le timer
 }
 
+// Démarrer le timer
+function launchTimer() {
+    if (!timer) { // Si le timer n'est pas déjà en cours
+        startTimer(); // Démarre le timer
+        const playPauseButton = document.querySelector(".playpause");
+        playPauseButton.innerHTML = '<i class="fa-solid fa-clock-rotate-left"></i>'; // Icône pour pause
+    }
+}
 
-document.querySelector(".playpause").addEventListener("click", resetTimer);
+// Écouteurs d'événements pour le bouton
+const playPauseButton = document.querySelector(".playpause");
+playPauseButton.addEventListener("click", () => {
+    if (timer) {
+        resetTimer(); // Si le timer est en cours, le réinitialise
+    } else {
+        launchTimer(); // Si le timer est arrêté, le lance
+    }
+});
 
 // Initialiser l'affichage du timer au démarrage
 updateTimerDisplay();
