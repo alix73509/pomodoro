@@ -1,56 +1,80 @@
 let isWorking = true; // true pour travail, false pour pause
-let timer; // Variable pour stocker le timer
-let timeLeft = 1 * 60; // Réinitialiser à 25 minutes en secondes
-const totalTime = timeLeft; // Pourcentage total du temps
+let timer;
+let workTime = 5 * 2;  // Temps de travail (pour test : 2 minutes)
+let breakTime = 5 * 2; // Temps de pause (pour test : 2 minutes)
+let timeLeft = workTime; // Temps initial pour le travail
+let totalTime = timeLeft; // Temps total courant
 
+// Mise à jour de l'affichage du timer
 function updateTimerDisplay() {
     const minutes = Math.floor(timeLeft / 60);
     const seconds = timeLeft % 60;
-    document.getElementById("timer").innerText = 
+    const timerElement = document.getElementById("timer");
+    timerElement.textContent = 
         `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
 
-    // Calculer la progression du cercle
+    // Mise à jour de la progression du cercle
     const progressCircle = document.getElementById("progress-circle");
-    const circumference = 2 * Math.PI * 150; // Circonférence du cercle (150 est le rayon)
+    const circumference = 2 * Math.PI * 150; // Circonférence du cercle 
     const offset = circumference - (timeLeft / totalTime) * circumference; // Calculer l'offset
     progressCircle.style.strokeDasharray = `${circumference} ${circumference}`;
-    progressCircle.style.strokeDashoffset = offset; // Appliquer l'offset
+    progressCircle.style.strokeDashoffset = offset;
+}
+
+// Changement de couleur selon le mode travail/pause
+function changeColor(color) {
+    document.body.style.backgroundColor = color;
+    document.querySelector(".playpause").style.backgroundColor = color;
+    document.querySelector(".travailpause").style.backgroundColor = color;
 }
 
 function startTimer() {
-    document.getElementById("travail").style.color = "yellowgreen";
+    document.getElementById("travail").style.color = isWorking ? "yellow" : "white";
+    document.getElementById("Pause").style.color = !isWorking ? "yellow" : "white";
+
+    // Mettre à jour le temps total (travail ou pause)
+    totalTime = isWorking ? workTime : breakTime;
+
     timer = setInterval(() => {
         timeLeft--;
         updateTimerDisplay();
 
         if (timeLeft < 0) {
-            clearInterval(timer);
-            isWorking = !isWorking; // Alterne entre travail et pause
-            timeLeft = isWorking ? 25 * 60 : 5 * 60; // 25 minutes ou 5 minutes
+            clearInterval(timer); // Arrête le timer
+            isWorking = !isWorking; // Alterner entre travail et pause
+            timeLeft = isWorking ? workTime : breakTime; // Réinitialise le temps
             updateTimerDisplay();
-            alert(isWorking ? "Retour au travail !" : "Temps de pause !");
-            startTimer(); // Démarre le nouveau timer
+
+            // Changer les couleurs en fonction du mode
+            if (isWorking) {
+                changeColor("red"); 
+            } else {
+                changeColor("blue"); 
+            }
+
+            // Redémarrer le timer après changement de mode
+            startTimer();
         }
-    }, 1000);
+    }, 1000); // Intervalle de 1 seconde
 }
 
-function toggleTimer() {
+// Réinitialiser le timer lorsqu'on clique sur le bouton
+function resetTimer() {
+    clearInterval(timer); // Arrêter le timer actuel (si en cours)
+    timer = null; // Réinitialiser la variable timer
+
+    // Réinitialiser le temps en fonction du mode actuel
+    timeLeft = isWorking ? workTime : breakTime;
+    updateTimerDisplay(); // Met à jour l'affichage immédiatement
+    startTimer(); // Redémarrer le timer depuis le début
+
+    // Mettre à jour l'icône du bouton (peut être ajusté)
     const playPauseButton = document.querySelector(".playpause");
-    
-    if (timer) {
-        clearInterval(timer);
-        timer = null; // Arrête le timer
-        timeLeft = totalTime; 
-        document.getElementById("travail").style.color = "white";
-        updateTimerDisplay(); // Met à jour l'affichage après réinitialisation
-        playPauseButton.innerHTML = '<i class="fas fa-play"></i>'; // Change l'icône en "Play"
-    } else {
-        startTimer(); // Démarre le timer
-        playPauseButton.innerHTML = '<i class="fa-solid fa-clock-rotate-left"></i>'; // Change l'icône en "Pause"
-    }
+    playPauseButton.innerHTML = '<i class="fa-solid fa-clock-rotate-left"></i>'; // Icône reset/restart
 }
 
-document.querySelector(".playpause").addEventListener("click", toggleTimer);
 
-// Initialise l'affichage
+document.querySelector(".playpause").addEventListener("click", resetTimer);
+
+// Initialiser l'affichage du timer au démarrage
 updateTimerDisplay();
