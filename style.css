@@ -6,10 +6,10 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Montserrat', sans-serif; /* On utilise la police Montserrat */
 }
 
-main {
+main { /* Tout le contenu est centré */
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -19,7 +19,7 @@ main {
 
 /* Titre principal */
 h1 {
-    font-size: 4vw; /* Taille adaptative pour s'adapter aux écrans */
+    font-size: 4vw; 
     color: white;
     margin-bottom: 2vh;
 }
@@ -30,13 +30,13 @@ h1 {
     max-width: 250px;
     height: 8vh;
     max-height: 80px;
-    border-radius: 15px;
+    border-radius: 15px; /*Les bords sont arrondis*/
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0 2vw;
     margin-bottom: 3vh;
-    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.5); /*Ajout d'ombre pour faire une démarcation*/
 }
 
 .travailpause p {

@@ -13,21 +13,21 @@
 <body>
     <main>
         <h1>TIMER POMODORO</h1>
-        <div class="travailpause">
+        <div class="travailpause"> <!--Affiche si le timer est sur le mode travail ou pause -->
             <p id="travail">Travail</p>
             <p id="Pause">Pause</p>
         </div>
-        <div class="circle">
-            <svg viewBox="0 0 100 100" class="progress-svg">
-                <circle id="progress-circle" cx="50" cy="50" r="45" class="progress-circle" />
-                <text id="timer" x="50" y="55" text-anchor="middle" fill="white" dominant-baseline="middle" font-size="1.8rem" font-family="Montserrat">00:00</text>
+        <div class="circle"> 
+            <svg viewBox="0 0 100 100" class="progress-svg"> <!--Cercle rouge qui contient le progress circle et le timer-->
+                <circle id="progress-circle" cx="50" cy="50" r="45" class="progress-circle" /> <!--Barre de progression sous forme de cercle-->
+                <text id="timer" x="50" y="55" text-anchor="middle" fill="white" dominant-baseline="middle" font-size="1.8rem" font-family="Montserrat">00:00</text><!--Timer dégressif-->
             </svg>
         </div>
         <div class="bouton">
-            <button id="startStopBtn" class="playpause"> <i class="fas fa-play"></i></button>
+            <button id="startStopBtn" class="playpause"> <i class="fas fa-play"></i></button> <!--Bouton qui permet de lancer le timer ou de le réinitialiser-->
         </div>
         <h3>Temps de Travail</h3>
-        <div class="time-selection">
+        <div class="time-selection"> <!--Permet de sélectionné le temps de travail-->
             <label for="minutes">Minutes: </label>
             <select id="minutes"></select>
         
@@ -35,7 +35,7 @@
             <select id="seconds"></select>
         </div>
         <h3>Temps de Pause</h3>
-        <div class="time-selection">
+        <div class="time-selection"> <!--Permet de sélectionné le temps de pause-->
             <label for="pauseMinutes">Minutes: </label>
             <select id="pauseMinutes"></select>
         
