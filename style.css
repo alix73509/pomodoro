@@ -2,8 +2,8 @@ h1 {
     text-align: center;
     color: white;
     font-weight: bold;
-    font-size: 50px;
-    margin-bottom: 20px; /* Espace entre le titre et le reste du contenu */
+    font-size: 4vw;
+    margin-bottom: 1.5vh; /* Espace entre le titre et le reste du contenu */
 }
 
 body {
@@ -17,7 +17,7 @@ body {
 }
 
 #timer {
-    font-size: 3rem;
+    font-size: 5vw;
     margin: 0; /* Supprime la marge par défaut */
     color: white; /* Couleur du texte en blanc */
     position: absolute; /* Positionnement absolu pour superposer sur le SVG */
@@ -26,24 +26,27 @@ body {
 }
 
 .playpause {
-    width: 120px;          
-    height: 120px;         
-    border: 7px solid white; 
+    width: 12vw;           /* Réduction de la taille du bouton */
+    height: 12vw;          /* Hauteur égale à la largeur */
+    max-width: 100px;      /* Limite la taille maximale */
+    max-height: 100px;     
+    border: 0.5vw solid white; /* Bordure légèrement réduite */
     border-radius: 50%;    
     cursor: pointer;
-    background-color: red; 
     color: white;
-    box-shadow: 0px 2px 4px red; 
     display: flex;         
     justify-content: center; 
     align-items: center;   
-    font-size: 3rem;  
-    margin-top: 20px; /* Espace au-dessus du bouton */
+    font-size: 2.5vw;  /* Taille de l'icône ajustée à la réduction */
+    margin-top: 1.5vh; /* Espace réduit */
+    margin-bottom: 1.5vh;
 }
 
 .circle {
-    width: 400px;          
-    height: 400px;         
+    width: 45vw;          /* Réduction de la taille du cercle */
+    height: 45vw;         
+    max-width: 350px;     /* Taille maximale réduite */
+    max-height: 350px;        
     background-color: transparent; /* Pas de fond pour que le SVG soit visible */
     border-radius: 50%;    
     box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.8); 
@@ -56,17 +59,18 @@ body {
 }
 
 .travailpause {
-    width: 250px;          
-    height: 80px;         
-    background-color: red; 
+    width: 55vw;           /* Réduction de la largeur */
+    max-width: 220px;      /* Largeur maximale réduite */
+    height: 9vh;           /* Réduction de la hauteur */
+    max-height: 70px;          
     border-radius: 20px;    /* Augmenter le rayon des bords */
     box-shadow: 0px 8px 50px rgba(0, 0, 0, 0.8); /* Ombre plus douce */
     display: flex;         
     justify-content: space-between; 
     align-items: center;   
     flex-direction: row;  
-    padding: 10px 20px;      /* Ajout d'espace intérieur */
-    margin: 10px auto;       /* Centre horizontalement */
+    padding: 0.8vh 1.5vw;  /* Espacement intérieur réduit */
+    margin: 1vh auto;       /* Centre horizontalement */
 }
 
 .travailpause p {
@@ -75,16 +79,14 @@ body {
     font-size: 1.5rem;    /* Taille de la police */
 }
 
-.background-circle {
-    fill: none;
-    stroke: rgba(255, 255, 255, 0.2);
-    stroke-width: 20; /* Épaisseur du cercle de fond */
-}
-
 .progress-circle {
     fill: none;
+    width: 35vw;          /* Réduction de la taille du cercle */
+    height: 35vw;         
+    max-width: 300px;     /* Taille maximale réduite */
+    max-height: 300px;
     stroke: rgb(217, 255, 0); /* Couleur du cercle de progression */
-    stroke-width: 20; /* Épaisseur du cercle de progression */
+    stroke-width: 3vh; /* Épaisseur du cercle de progression */
     stroke-linecap: round; /* Coins arrondis */
     transition: stroke-dashoffset 0.5s; /* Transition fluide pour le changement de la progression */
 }
@@ -93,5 +95,5 @@ body {
     display: flex; /* Utilise flexbox pour centrer le bouton */
     justify-content: center; /* Centre horizontalement */
     width: 100%; /* Prend toute la largeur disponible */
-    margin-top: 20px; /* Espace au-dessus du bouton */
+    margin-top: 2vh; /* Espace au-dessus du bouton */
 }
