@@ -1,99 +1,164 @@
-h1 {
-    text-align: center;
-    color: white;
-    font-weight: bold;
-    font-size: 4vw;
-    margin-bottom: 1.5vh; /* Espace entre le titre et le reste du contenu */
-}
-
+/* Styles globaux */
 body {
     margin: 0;
+    height: 130vh;
+    background-color: red;
     display: flex;
     justify-content: center;
-    align-items: center;  /* Centrer verticalement */
-    height: 100vh;
-    background-color: red;
-    flex-direction: column; /* Permet d'empiler les éléments verticalement */
+    align-items: center;
+    font-family: 'Montserrat', sans-serif;
 }
 
-#timer {
-    font-size: 5vw;
-    margin: 0; /* Supprime la marge par défaut */
-    color: white; /* Couleur du texte en blanc */
-    position: absolute; /* Positionnement absolu pour superposer sur le SVG */
-    z-index: 2; /* Assure que le timer est au-dessus du SVG */
-    text-anchor: middle; /* Centre le texte */
+main {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-.playpause {
-    width: 12vw;           /* Réduction de la taille du bouton */
-    height: 12vw;          /* Hauteur égale à la largeur */
-    max-width: 100px;      /* Limite la taille maximale */
-    max-height: 100px;     
-    border: 0.5vw solid white; /* Bordure légèrement réduite */
-    border-radius: 50%;    
-    cursor: pointer;
+/* Titre principal */
+h1 {
+    font-size: 4vw; /* Taille adaptative pour s'adapter aux écrans */
     color: white;
-    display: flex;         
-    justify-content: center; 
-    align-items: center;   
-    font-size: 2.5vw;  /* Taille de l'icône ajustée à la réduction */
-    margin-top: 1.5vh; /* Espace réduit */
-    margin-bottom: 1.5vh;
+    margin-bottom: 2vh;
 }
 
-.circle {
-    width: 45vw;          /* Réduction de la taille du cercle */
-    height: 45vw;         
-    max-width: 350px;     /* Taille maximale réduite */
-    max-height: 350px;        
-    background-color: transparent; /* Pas de fond pour que le SVG soit visible */
-    border-radius: 50%;    
-    box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.8); 
-    display: flex;         
-    justify-content: center; 
-    align-items: center;   
-    flex-direction: column; 
-    position: relative; /* Permet de positionner le SVG à l'intérieur */
-    margin: 0 auto; /* Centre le cercle horizontalement */
-}
-
+/* Section Travail / Pause */
 .travailpause {
-    width: 55vw;           /* Réduction de la largeur */
-    max-width: 220px;      /* Largeur maximale réduite */
-    height: 9vh;           /* Réduction de la hauteur */
-    max-height: 70px;          
-    border-radius: 20px;    /* Augmenter le rayon des bords */
-    box-shadow: 0px 8px 50px rgba(0, 0, 0, 0.8); /* Ombre plus douce */
-    display: flex;         
-    justify-content: space-between; 
-    align-items: center;   
-    flex-direction: row;  
-    padding: 0.8vh 1.5vw;  /* Espacement intérieur réduit */
-    margin: 1vh auto;       /* Centre horizontalement */
+    width: 60vw;
+    max-width: 250px;
+    height: 8vh;
+    max-height: 80px;
+    border-radius: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2vw;
+    margin-bottom: 3vh;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.5);
 }
 
 .travailpause p {
-    margin: 0;            /* Enlève la marge par défaut */
-    color: white;         /* Couleur du texte pour qu'il soit visible */
-    font-size: 1.5rem;    /* Taille de la police */
+    font-size: 1.4rem; /* Taille de texte adaptative */
+    color: white;
+    margin: 0;
+}
+
+/* Cercle contenant le timer */
+.circle {
+    width: 60vw; /* Taille relative à l'écran */
+    max-width: 350px;
+    max-height: 350px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 3vh;
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+}
+
+.progress-svg {
+    width: 100%;
+    height: 100%;
 }
 
 .progress-circle {
     fill: none;
-    width: 35vw;          /* Réduction de la taille du cercle */
-    height: 35vw;         
-    max-width: 300px;     /* Taille maximale réduite */
-    max-height: 300px;
-    stroke: rgb(217, 255, 0); /* Couleur du cercle de progression */
-    stroke-width: 3vh; /* Épaisseur du cercle de progression */
-    stroke-linecap: round; /* Coins arrondis */
-    transition: stroke-dashoffset 0.5s; /* Transition fluide pour le changement de la progression */
+    stroke: rgb(217, 255, 0);
+    stroke-width: 5;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 0.5s ease;
+}
+
+/* Timer texte au centre */
+#timer {
+    font-size: 1.8rem;
+    fill: white;
+    text-anchor: middle;
+}
+
+/* Bouton Play / Pause */
+.playpause {
+    width: 14vw; /* Taille du bouton relative à l'écran */
+    height: 14vw;
+    max-width: 120px;
+    max-height: 120px;
+    border: 0.4vw solid white;
+    border-radius: 50%;
+    background-color: red;
+    color: white;
+    font-size: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.playpause:hover {
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
 .bouton {
-    display: flex; /* Utilise flexbox pour centrer le bouton */
-    justify-content: center; /* Centre horizontalement */
-    width: 100%; /* Prend toute la largeur disponible */
-    margin-top: 2vh; /* Espace au-dessus du bouton */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 2vh;
+}
+
+/* Responsive media queries */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 8vw;
+    }
+
+    .travailpause p {
+        font-size: 1.2rem;
+    }
+
+    .playpause {
+        width: 16vw;
+        height: 16vw;
+        font-size: 2.5rem;
+    }
+}
+
+.time-selection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 1.5vh;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.time-selection label {
+    font-size: 1rem;
+    margin-right: 5px;
+    margin-bottom: 3vh;
+    margin-top: 1vh;
+}
+
+.time-selection select {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #444;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    max-height: 150px; /* Limite la hauteur maximale du menu déroulant */
+    overflow-y: auto;  /* Permet le défilement si la liste est plus longue que la hauteur */
+}
+
+.time-selection {
+    margin-bottom: 10px; /* Ajoute un peu d'espace entre les sélections de travail et de pause */
+}
+
+h3{
+    color: white;
 }

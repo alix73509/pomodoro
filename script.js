@@ -1,9 +1,18 @@
 let isWorking = true; // true pour travail, false pour pause
 let timer = null; // Variable pour le timer
-let workTime = 5 * 2;  // Temps de travail (pour test : 2 minutes)
-let breakTime = 5 * 2; // Temps de pause (pour test : 2 minutes)
+let workTime = 25 * 60;  // Temps de travail par défaut en secondes
+let breakTime = 5 * 60; // Temps de pause par défaut en secondes
 let timeLeft = workTime; // Temps initial pour le travail
 let totalTime = timeLeft; // Temps total courant
+
+// Paramètres pour le cercle de progression
+const progressCircle = document.getElementById("progress-circle");
+const circleRadius = progressCircle.r.baseVal.value;  // Récupère le rayon du cercle
+const circumference = 2 * Math.PI * circleRadius; // Circonférence du cercle
+
+// Configuration initiale du cercle
+progressCircle.style.strokeDasharray = `${circumference}`;
+progressCircle.style.strokeDashoffset = `${circumference}`;
 
 // Mise à jour de l'affichage du timer
 function updateTimerDisplay() {
@@ -14,11 +23,27 @@ function updateTimerDisplay() {
         `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
 
     // Mise à jour de la progression du cercle
-    const progressCircle = document.getElementById("progress-circle");
-    const circumference = 2 * Math.PI * 150; // Circonférence du cercle 
+    updateProgressCircle();
+}
+
+// Fonction pour mettre à jour la progression du cercle
+function updateProgressCircle() {
     const offset = circumference - (timeLeft / totalTime) * circumference; // Calculer l'offset
-    progressCircle.style.strokeDasharray = `${circumference} ${circumference}`;
     progressCircle.style.strokeDashoffset = offset;
+}
+
+// Fonction pour récupérer le temps choisi dans le menu déroulant
+function getSelectedTime() {
+    const minutes = parseInt(document.getElementById("minutes").value);
+    const seconds = parseInt(document.getElementById("seconds").value);
+    return (minutes * 60) + seconds; // Convertir en secondes
+}
+
+// Fonction pour récupérer le temps de pause choisi
+function getSelectedTimePause() {
+    const minutes = parseInt(document.getElementById("pauseMinutes").value);
+    const seconds = parseInt(document.getElementById("pauseSeconds").value);
+    return (minutes * 60) + seconds; // Convertir en secondes
 }
 
 // Changement de couleur selon le mode travail/pause
@@ -42,7 +67,9 @@ function startTimer() {
         if (timeLeft < 0) {
             clearInterval(timer); // Arrête le timer
             isWorking = !isWorking; // Alterner entre travail et pause
-            timeLeft = isWorking ? workTime : breakTime; // Réinitialise le temps
+
+            // Mise à jour du temps restant
+            timeLeft = isWorking ? getSelectedTime() : getSelectedTimePause(); // Obtenir le temps sélectionné
             updateTimerDisplay();
 
             // Changer les couleurs en fonction du mode
@@ -63,10 +90,12 @@ function resetTimer() {
     clearInterval(timer); // Arrêter le timer actuel (si en cours)
     timer = null; // Réinitialiser la variable timer
 
-    // Remettre le temps à celui du travail
+    // Remettre le temps à celui du travail défini par l'utilisateur
     isWorking = true; // Assurer que l'état est travail
-    timeLeft = workTime; // Réinitialiser à 2 minutes (ou ce que vous avez défini)
-    
+    workTime = getSelectedTime(); // Obtenir le temps de travail sélectionné
+    breakTime = getSelectedTimePause(); // Obtenir le temps de pause sélectionné
+    timeLeft = workTime; // Réinitialiser à la valeur choisie par l'utilisateur
+
     // Mettre à jour l'affichage pour le mode travail
     document.getElementById("travail").style.color = "yellow"; // Couleur du texte pour le mode travail
     document.getElementById("Pause").style.color = "white"; // Couleur du texte pour le mode pause
@@ -81,6 +110,9 @@ function resetTimer() {
 // Démarrer le timer
 function launchTimer() {
     if (!timer) { // Si le timer n'est pas déjà en cours
+        workTime = getSelectedTime(); // Obtenir le temps de travail sélectionné
+        breakTime = getSelectedTimePause(); // Obtenir le temps de pause sélectionné
+        timeLeft = workTime; // Mettre à jour le temps restant pour le travail
         startTimer(); // Démarre le timer
         const playPauseButton = document.querySelector(".playpause");
         playPauseButton.innerHTML = '<i class="fa-solid fa-clock-rotate-left"></i>'; // Icône pour pause
@@ -96,6 +128,32 @@ playPauseButton.addEventListener("click", () => {
         launchTimer(); // Si le timer est arrêté, le lance
     }
 });
+
+// Fonction pour peupler les options du menu déroulant
+function populateSelectOptions(selectElement) {
+    for (let i = 0; i <= 59; i++) {
+        const option = document.createElement("option");
+        option.value = i;
+        option.textContent = i < 10 ? `0${i}` : i;  // Affiche 01, 02, ... 59
+        selectElement.appendChild(option);
+    }
+}
+
+// Sélection des éléments du DOM pour le temps de travail
+const minutesSelect = document.getElementById("minutes");
+const secondsSelect = document.getElementById("seconds");
+
+// Sélection des éléments du DOM pour le temps de pause
+const pauseMinutesSelect = document.getElementById("pauseMinutes");
+const pauseSecondsSelect = document.getElementById("pauseSeconds");
+
+// Ajouter les options dynamiquement pour le temps de travail
+populateSelectOptions(minutesSelect);
+populateSelectOptions(secondsSelect);
+
+// Ajouter les options dynamiquement pour le temps de pause
+populateSelectOptions(pauseMinutesSelect);
+populateSelectOptions(pauseSecondsSelect);
 
 // Initialiser l'affichage du timer au démarrage
 updateTimerDisplay();
